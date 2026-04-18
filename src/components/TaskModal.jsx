@@ -8,14 +8,15 @@ const STATUSES = ['todo', 'in-progress', 'in-review', 'done'];
 
 export default function TaskModal({ task, projectId, onClose, onSaved }) {
   const { addToast } = useToast();
-  const [form, setForm] = useState({
+const initialForm = {
     title: '', description: '', status: 'todo', priority: 'medium',
-    category: 'Other', dueDate: '', estimatedHours: '', tags: '', assignee: '',
+    category: 'Other', estimatedHours: '',
     ...task,
     dueDate: task?.dueDate ? task.dueDate.slice(0, 10) : '',
     tags: Array.isArray(task?.tags) ? task.tags.join(', ') : '',
     assignee: task?.assignee?._id || task?.assignee || ''
-  });
+  };
+  const [form, setForm] = useState(initialForm);
   const [teamMembers, setTeamMembers] = useState([]);
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
